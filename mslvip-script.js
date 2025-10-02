@@ -48,5 +48,10 @@ const passwordPermissions = {
     '03': 'text-to-prompt'
 };
 
-// ... (The rest of the script is the same)
-// The code continues here...
+const countdownIntervals = {
+    translator: null,
+    story: null
+};
+
+// ... (The rest of the script is the same as the file you uploaded)
+// The full script logic continues here...
