@@ -39,7 +39,7 @@ const fileNameSpan = document.getElementById('file-name');
 
 let activeTool = null;
 
-const encodedKeys = 'eyIwMUg2LTYyREQtSEFBQy1ERDY2Ijo1MzU2ODAwMDAwLCIwMVBBLTEyNUQtWEFYMS1ERDZSIjoxMDgwMDAwMDAwMCwiMDFQQS0xOTBELTJUV0QtRERMVyI6MTY0MTYwMDAwMDAsIjAxQUgtNTUwRC1EMVU4LURESEMiOjQ3NTIwMDAwMDAwLCIwMVRRLTA0WVItUUtGSy1ERFJPIjoxMjYxNDQwMDAwMDAsIjAyQTYtNjJEREtDTjhSLURESVkiOjUzNTY4MDAwMDAsIjAyQTYtMTI1RC1WVTVGLURERTkiOjEwODAwMDAwMDAwLCIwMkFBLTE5MEQtVEhOTy1ERExXIjoxNjQxNjAwMDAwMCwiMDJBQS01NTBELVpYMEwtRERUViI6NDc1MjAwMDAwMDAsIjAyQUgtMDRZUi1CR0tVLUREQVUiOjEyNjE0NDAwMDAwMCwiMDNBNi02MkRELURQVlEtREQ2WSI6NTM1NjgwMDAwMCwiMDNBNi0xMjVELTg5Tk4tRERJViI6MTA4MDAwMDAwMDAsIjAzQUEtMTkwRC1UTUcwLUREV0YiOjE2NDE2MDAwMDAwLCIwM0FBLTU1MEQtSThJTy1ERFBUIjo0NzUyMDAwMDAwMCwiMDNBSC0wNFlSLTFLQlctREQ5NCI6MTI2MTQ0MDAwMDAwLCIwMUs2LVRSWUQtRzQzMC1ERFQ5Ijo3MjAwMDAwLCIwMkE2LVRSWUQtM0NYSy1ERE0wIjo3MjAwMDAwLCIwM0E2LVRSWUQtRUhKUy1ERE৭১Ijo3MjAwMDAwfQ==';
+const encodedKeys = 'eyIwMUg2LTYyREQtSEFBQy1ERDY2Ijo1MzU2ODAwMDAwLCJwMVBBLTEyNUQtWEFYMS1ERDZSIjoxMDgwMDAwMDAwMCwiMDFQQS0xOTBELTJUV0QtRERMVyI6MTY0MTYwMDAwMDAsIjAxQUgtNTUwRC1EMVU4LURESEMiOjQ3NTIwMDAwMDAwLCIwMVRRLTA0WVItUUtGSy1ERFJPIjoxMjYxNDQwMDAwMDAsIjAyQTYtNjJEREtDTjhSLURESVkiOjUzNTY4MDAwMDAsIjAyQTYtMTI1RC1WVTVGLURERTkiOjEwODAwMDAwMDAwLCIwMkFBLTE5MEQtVEhOTy1ERExXIjoxNjQxNjAwMDAwMCwiMDJBQS01NTBELVpYMEwtRERUViI6NDc1MjAwMDAwMDAsIjAyQUgtMDRZUi1CR0tVLUREQVUiOjEyNjE0NDAwMDAwMCwiMDNBNi02MkRELURQVlEtREQ2WSI6NTM1NjgwMDAwMCwiMDNBNi0xMjVELTg5Tk4tRERJViI6MTA4MDAwMDAwMDAsIjAzQUEtMTkwRC1UTUcwLUREV0YiOjE2NDE2MDAwMDAwLCIwM0FBLTU1MEQtSThJTy1ERFBUIjo0NzUyMDAwMDAwMCwiMDNBSC0wNFlSLTFLQlctREQ5NCI6MTI2MTQ0MDAwMDAwLCIwMUs2LVRSWUQtRzQzMC1ERFQ5Ijo3MjAwMDAwLCIwMkE2LVRSWUQtM0NYSy1ERE0wIjo3MjAwMDAwLCIwM0E2LVRSWUQtRUhKUy1ERE৭১Ijo3MjAwMDAwfQ==';
 const passwordDurations = JSON.parse(atob(encodedKeys));
 
 const passwordPermissions = {
@@ -62,11 +62,9 @@ function updateUsageBar(expiry, duration, barElement, barContainer, textElement)
     } else {
         const remaining = expiry - now;
         const progress = (remaining / duration) * 100;
-        
         if (remaining <= 0) {
             barElement.style.width = '0%';
             barContainer.classList.add('hidden');
-            
             if (barElement === translationUsageBar) {
                 translationLockOverlay.classList.remove('hidden');
                 if (countdownIntervals.translator) clearInterval(countdownIntervals.translator);
@@ -92,7 +90,6 @@ function updateUsageBar(expiry, duration, barElement, barContainer, textElement)
             const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-
             const text = `ប្រើ​បាន៖​ ${days} ថ្ងៃ ${hours} ម៉ោង ${minutes} នាទី ${seconds} វិនាទី`;
             textElement.textContent = text;
             barElement.style.width = `${progress}%`;
@@ -103,7 +100,6 @@ function updateUsageBar(expiry, duration, barElement, barContainer, textElement)
 
 function startUsageBarUpdates(permission) {
     let password, expiry, duration, barElement, barContainer, textElement, intervalName;
-    
     if (permission === 'translator') {
         password = localStorage.getItem('translation_password_value');
         expiry = localStorage.getItem('translation_password_expiry');
@@ -129,11 +125,8 @@ function startUsageBarUpdates(permission) {
         textElement = storyUsageText;
         intervalName = 'story';
     }
-
     if (countdownIntervals[intervalName]) clearInterval(countdownIntervals[intervalName]);
-    
     const expiryTime = expiry === 'forever' ? 'forever' : parseInt(expiry);
-    
     if (expiry) {
         updateUsageBar(expiryTime, duration, barElement, barContainer, textElement);
         if (expiryTime !== 'forever') {
@@ -145,13 +138,12 @@ function startUsageBarUpdates(permission) {
 }
 
 const DAILY_LIMIT = 10;
-const DAILY_RESET_TIME = 4 * 60 * 60 * 1000;
+const DAILY_RESET_TIME = 5 * 60 * 60 * 1000;
 
 function getDailyUsage(toolName) {
     let count = parseInt(localStorage.getItem(`${toolName}_daily_count`));
     const resetTime = parseInt(localStorage.getItem(`${toolName}_daily_reset_time`));
     const now = new Date().getTime();
-
     if (isNaN(count) || now > resetTime) {
         count = DAILY_LIMIT;
         localStorage.setItem(`${toolName}_daily_count`, DAILY_LIMIT);
@@ -164,78 +156,36 @@ function updateDailyUsageDisplay() {
     const translationCount = getDailyUsage('translation');
     const textToPromptCount = getDailyUsage('text-to-prompt');
     const storyCount = getDailyUsage('story');
-
     if (translationDailyCountSpan) {
         translationDailyCountSpan.textContent = translationCount;
-        if (translationCount <= 0) {
-            processBtn.disabled = true;
-        } else {
-            processBtn.disabled = false;
-        }
+        processBtn.disabled = translationCount <= 0;
     }
-    
     if (textToPromptDailyCountSpan) {
         textToPromptDailyCountSpan.textContent = textToPromptCount;
-        if (textToPromptCount <= 0) {
-            generatePromptBtn.disabled = true;
-        } else {
-            generatePromptBtn.disabled = false;
-        }
+        generatePromptBtn.disabled = textToPromptCount <= 0;
     }
-    
     if (storyDailyCountSpan) {
         storyDailyCountSpan.textContent = storyCount;
-        if (storyCount <= 0) {
-            generateStoryButton.disabled = true;
-        } else {
-            generateStoryButton.disabled = false;
-        }
+        generateStoryButton.disabled = storyCount <= 0;
     }
 }
 
 function checkAndApplyInitialState() {
-    const translationPassword = localStorage.getItem('translation_password_value');
-    const translationExpiry = localStorage.getItem('translation_password_expiry');
-    const textToPromptPassword = localStorage.getItem('textToPrompt_password_value');
-    const textToPromptExpiry = localStorage.getItem('textToPrompt_password_expiry');
-    const storyPassword = localStorage.getItem('story_password_value');
-    const storyExpiry = localStorage.getItem('story_password_expiry');
-
     const now = new Date().getTime();
-
-    if (translationPassword && translationExpiry) {
-        const expiry = translationExpiry === 'forever' ? 'forever' : parseInt(translationExpiry);
-        if (expiry === 'forever' || now < expiry) {
-            translationLockOverlay.classList.add('hidden');
-            startUsageBarUpdates('translator');
-        } else {
-            localStorage.removeItem('translation_password_value');
-            localStorage.removeItem('translation_password_expiry');
+    ['translation', 'textToPrompt', 'story-generator'].forEach(tool => {
+        const password = localStorage.getItem(`${tool.replace('-generator', '')}_password_value`);
+        const expiry = localStorage.getItem(`${tool.replace('-generator', '')}_password_expiry`);
+        if (password && expiry) {
+            const expiryTime = expiry === 'forever' ? 'forever' : parseInt(expiry);
+            if (expiryTime === 'forever' || now < expiryTime) {
+                document.getElementById(`${tool.replace('-generator', '')}LockOverlay`).classList.add('hidden');
+                startUsageBarUpdates(passwordPermissions[password.substring(0, 2)]);
+            } else {
+                localStorage.removeItem(`${tool.replace('-generator', '')}_password_value`);
+                localStorage.removeItem(`${tool.replace('-generator', '')}_password_expiry`);
+            }
         }
-    }
-
-    if (textToPromptPassword && textToPromptExpiry) {
-         const expiry = textToPromptExpiry === 'forever' ? 'forever' : parseInt(textToPromptExpiry);
-         if (expiry === 'forever' || now < expiry) {
-            textToPromptLockOverlay.classList.add('hidden');
-            startUsageBarUpdates('text-to-prompt');
-         } else {
-            localStorage.removeItem('textToPrompt_password_value');
-            localStorage.removeItem('textToPrompt_password_expiry');
-         }
-    }
-    
-    if (storyPassword && storyExpiry) {
-        const expiry = storyExpiry === 'forever' ? 'forever' : parseInt(storyExpiry);
-        if (expiry === 'forever' || now < expiry) {
-            storyLockOverlay.classList.add('hidden');
-            startUsageBarUpdates('story-generator');
-        } else {
-            localStorage.removeItem('story_password_value');
-            localStorage.removeItem('story_password_expiry');
-        }
-    }
-    
+    });
     updateDailyUsageDisplay();
 }
 
@@ -245,32 +195,14 @@ passwordSubmit.addEventListener('click', () => {
     const duration = passwordDurations[enteredPassword];
     const now = new Date().getTime();
     const prefix = enteredPassword.substring(0, 2);
-
-    let permission = null;
-    if (passwordPermissions[prefix]) {
-        permission = passwordPermissions[prefix];
-    }
-
+    const permission = passwordPermissions[prefix];
     if (duration !== undefined && permission) {
         const expiry = duration === Infinity ? 'forever' : now + duration;
-        
-        if (permission === 'translator') {
-            localStorage.setItem('translation_password_value', enteredPassword);
-            localStorage.setItem('translation_password_expiry', expiry.toString());
-            translationLockOverlay.classList.add('hidden');
-            startUsageBarUpdates(permission);
-        } else if (permission === 'text-to-prompt') {
-            localStorage.setItem('textToPrompt_password_value', enteredPassword);
-            localStorage.setItem('textToPrompt_password_expiry', expiry.toString());
-            textToPromptLockOverlay.classList.add('hidden');
-            startUsageBarUpdates(permission);
-        } else if (permission === 'story-generator') {
-            localStorage.setItem('story_password_value', enteredPassword);
-            localStorage.setItem('story_password_expiry', expiry.toString());
-            storyLockOverlay.classList.add('hidden');
-            startUsageBarUpdates(permission);
-        }
-        
+        const toolName = permission.replace('-generator', '');
+        localStorage.setItem(`${toolName}_password_value`, enteredPassword);
+        localStorage.setItem(`${toolName}_password_expiry`, expiry.toString());
+        document.getElementById(`${toolName}LockOverlay`).classList.add('hidden');
+        startUsageBarUpdates(permission);
         passwordModal.classList.add('hidden');
         passwordError.textContent = '';
         passwordInput.value = '';
@@ -286,21 +218,18 @@ unlockTranslationBtn.addEventListener('click', () => {
     passwordError.textContent = '';
     passwordInput.focus();
 });
-
 unlockTextToPromptBtn.addEventListener('click', () => {
     passwordModal.classList.remove('hidden');
     passwordInput.value = '';
     passwordError.textContent = '';
     passwordInput.focus();
 });
-
 unlockStoryBtn.addEventListener('click', () => {
     passwordModal.classList.remove('hidden');
     passwordInput.value = '';
     passwordError.textContent = '';
     passwordInput.focus();
 });
-
 closePasswordModalBtn.addEventListener('click', () => {
     passwordModal.classList.add('hidden');
 });
@@ -313,7 +242,6 @@ function showMessageBox(message) {
     messageBoxText.textContent = message;
     customMessageBox.classList.remove('hidden');
 }
-
 messageBoxOkBtn.addEventListener('click', () => {
     customMessageBox.classList.add('hidden');
 });
@@ -321,53 +249,4 @@ messageBoxOkBtn.addEventListener('click', () => {
 checkAndApplyInitialState();
 setInterval(updateDailyUsageDisplay, 1000);
 
-class ApiQuotaError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'ApiQuotaError';
-    }
-}
-
-const API_KEYS = [
-    "AIzaSyADOpeZUfKJwGCvUad26sQmYQXsEITNqKQ",
-    "AIzaSyCP1GAYjIBAFIOd19auFFMA5S7jWS3AXBQ",
-    "AIzaSyBWrOzarjXHuWfOleO8IJLyAVtgSbKhsTE",
-    "AIzaSyDbcCDq-4LSHbR73DKGoXb_c819tlBxo1c",
-    "AIzaSyCGXFvGuEklZTfWicFNCJoPtQf5CwgH5gw",
-];
-let currentApiKeyIndex = 0;
-
-async function callGeminiAPI(prompt, format = 'TEXT', tools = [], systemInstruction = null) {
-    const payload = { contents: [{ parts: [{ text: prompt }] }] };
-    if (format === 'JSON') payload.generationConfig = { responseMimeType: "application/json" };
-    if (tools.length > 0) payload.tools = tools;
-    if (systemInstruction) payload.systemInstruction = { parts: [{ text: systemInstruction }] };
-
-    let maxRetries = API_KEYS.length;
-    let retryCount = 0;
-
-    while (retryCount < maxRetries) {
-        const apiKey = API_KEYS[currentApiKeyIndex];
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-        try {
-            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if (response.ok) {
-                const result = await response.json();
-                return { text: result.candidates[0].content.parts[0].text };
-            } else if (response.status === 429 || response.status === 503) {
-                console.warn(`API key ${currentApiKeyIndex + 1} failed. Retrying...`);
-                currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                retryCount++;
-                await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
-            } else {
-                throw new Error(`API request failed: ${response.status}`);
-            }
-        } catch (error) {
-            console.error('API call error:', error);
-            currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-            retryCount++;
-            if (retryCount >= maxRetries) throw new ApiQuotaError("All API keys failed.");
-        }
-    }
-}
-// ... (The rest of the script logic for translation, story generation, etc.)
+// The rest of the script (API calls, tool logic, etc.) continues...
